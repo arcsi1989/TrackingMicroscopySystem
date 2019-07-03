@@ -1,0 +1,2 @@
+The presence of this file marks an output directory in a CMake build folder.
+Otherwise, the program assumes a normal (installed) start.

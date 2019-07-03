@@ -1,0 +1,113 @@
+<configurations>
+
+<!-- default: connection via usb
+
+     to select a com port fill COMPORT variable
+     for example: USER_COMPORT= "COM3"
+
+     clear USER_LOGGING: USER_LOGGING ="" to switch off logging
+
+
+     to program from outside set the variables COMPORT and maybe mic from outside
+
+     for example pass a macro string via pHardwareModel->getUnit(..)
+*************************************************** 
+****
+**
+--> 
+%{
+  
+  USER_COMPORT = "COM4"
+  USER_MICNAME = ""
+  USER_LOGGING = "true"
+  USER_BAUD ="115200"
+  USER_USBPORT = ""
+
+}%
+<!--  
+                                                  ** 
+                                                **** 
+ *************************************************** 
+
+   fallback configuration 
+   when COMPORT is defined clear USBPORT 
+   default baudrate for COMPORT is 57600
+-->
+%{
+
+  if USER_USBPORT USBPORT = USER_USBPORT endif
+  if USER_COMPORT COMPORT = USER_COMPORT endif
+  if USER_MICNAME MICNAME = USER_MICNAME endif
+  if USER_BAUD BAUD = USER_BAUD endif
+  if USER_LOGGING LOGGING = USER_LOGGING endif
+
+
+  if COMPORT 
+     USBPORT = ""
+     port = COMPORT  
+     if !BAUD     BAUD="57600" endif
+  else 
+     if !USBPORT USBPORT="usb*" endif 
+  endif 
+
+  if USBPORT
+    port = "USB"
+  else
+    if !COMPORT COMPORT="COM1" endif
+  endif
+
+  if !MICNAME MICNAME="DM-OR-DMI" endif
+
+}%
+  <!-- USBPORT: %{USBPORT}% COMPORT: %{COMPORT}% BAUD: %{BAUD}% MICNAME: %{MICNAME}% LOGGING: %{LOGGING}% --> 
+
+    <unit name="%{MICNAME}%-%{port}%" id="MICROSCOPE" driver="valentine.dll">
+        <parameters>
+%{ if COMPORT if BAUD }%
+            <driver-config baudrate="%{BAUD}%"/>
+%{ endif endif 
+   if COMPORT }%
+            <unit name="serial1" id="CM-SERIAL-COMMUNICATION-II" driver="cmserial2.dll">
+                <parameters>
+                    <serial-config comport="%{COMPORT}%"/>
+                </parameters>
+            </unit>
+%{
+   endif
+   if USBPORT 
+}%            <unit name="usb1" id="CM-SERIAL-COMMUNICATION-II" driver="cmusb.dll">
+                <parameters>
+                    <usb-config usbport="%{USBPORT}%"/>
+                </parameters>
+            </unit>
+%{ 
+   endif 
+   if LOGGING 
+}%            <unit name="logger1" id="LOGGER" detect="*" driver="logger.dll">
+                <parameters> 
+                    <logger-config  logfile="%{MICNAME}% logfile %{port}%.log"/>
+                </parameters>
+            </unit>
+%{ endif 
+}%        </parameters>
+    </unit>
+
+    <unit name="DEMO-DM6000B" id="MICROSCOPE" detect="*" driver="cmemulator.dll">
+        <parameters>
+            <jupiter-config stand="DM6000B" filedirectory="." >
+                <nosepiece size="7" />
+            </jupiter-config>
+            <unit name="persist" id="9999" detect="*" driver="ahmpersist.dll"/>
+        </parameters>
+    </unit>
+
+    <!-- DEMO DMI6000B -->
+
+    <unit name="DEMO-DMI6000B" id="MICROSCOPE" detect="*" driver="cmemulator.dll">
+        <parameters>
+            <jupiter-config stand="DMI6000B" filedirectory="." >
+            </jupiter-config>
+            <unit name="persist" id="9999" detect="*" driver="ahmpersist.dll"/>
+        </parameters>
+    </unit>
+</configurations>
