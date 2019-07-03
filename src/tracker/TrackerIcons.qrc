@@ -1,0 +1,26 @@
+<RCC>
+  <qresource prefix="tracker">
+    <file>icons/misc/busy.gif</file>
+    <file>icons/misc/busy.png</file>
+    <file>icons/misc/delete.png</file>
+    <file>icons/misc/plus.png</file>
+    <file>icons/misc/arrow-blue-rounded-down_32.png</file>
+    <file>icons/misc/arrow-blue-rounded-downleft_32.png</file>
+    <file>icons/misc/arrow-blue-rounded-downright_32.png</file>
+    <file>icons/misc/arrow-blue-rounded-left_32.png</file>
+    <file>icons/misc/arrow-blue-rounded-right_32.png</file>
+    <file>icons/misc/arrow-blue-rounded-up_32.png</file>
+    <file>icons/misc/arrow-blue-rounded-upleft_32.png</file>
+    <file>icons/misc/arrow-blue-rounded-upright_32.png</file>
+    <file>icons/misc/camera_32.png</file>
+    <file>icons/misc/down.png</file>
+    <file>icons/misc/next.png</file>
+    <file>icons/misc/previous.png</file>
+    <file>icons/misc/up.png</file>
+    <file>icons/office/layout16.png</file>
+    <file>icons/office/refresh16.png</file>
+    <file>icons/misc/reload.png</file>
+    <file>icons/misc/play_blue.png</file>
+    <file>icons/misc/play.png</file>
+  </qresource>
+</RCC>

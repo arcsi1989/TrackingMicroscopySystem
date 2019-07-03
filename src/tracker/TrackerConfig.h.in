@@ -1,0 +1,99 @@
+/*
+ Copyright (c) 2009-2012, Reto Grieder
+
+ Permission to use, copy, modify, and/or distribute this software for any
+ purpose with or without fee is hereby granted, provided that the above
+ copyright notice and this permission notice appear in all copies.
+ This software is provided 'as-is', without any express or implied warranty.
+*/
+
+/**
+@file
+@brief
+    Various constants for compiler, architecture and platform.
+@remarks
+    @GENERATED_FILE_COMMENT@
+*/
+
+#ifndef _TrackerConfig_H__
+#define _TrackerConfig_H__
+
+/*---------------------------------
+ * Platform and compiler related options
+ *-------------------------------*/
+
+// Architecture
+#ifdef _WIN64
+#  define TRACKER_ARCH_64
+#else
+#  define TRACKER_ARCH_32
+#endif
+
+
+/*---------------------------------
+ * Version information
+ *-------------------------------*/
+
+#define TRACKER_VERSION_MAJOR @TRACKER_VERSION_MAJOR@
+#define TRACKER_VERSION_MINOR @TRACKER_VERSION_MINOR@
+#define TRACKER_VERSION_PATCH @TRACKER_VERSION_PATCH@
+#define TRACKER_VERSION_NAME "@TRACKER_VERSION_NAME@"
+
+//! Defines version info encoded as 0xMMIIPP (M: Major version, I: Minor version, P: Patch version, all as hex)
+#define TRACKER_VERSION \
+    ((TRACKER_VERSION_MAJOR << 16) | (TRACKER_VERSION_MINOR << 8) | TRACKER_VERSION_PATCH)
+
+
+/*---------------------------------
+ * Options
+ *-------------------------------*/
+
+#cmakedefine TRACKER_DUMMY             ///< Enables offline testing with dummy classes
+#cmakedefine USE_WINMAIN               ///< Suppresses the console window at startup
+#cmakedefine CMAKE_CONFIGURATION_TYPES ///< Multi-configuration system will have subfolders in the build directory
+
+/*---------------------------------
+ * Declarations
+ *-------------------------------*/
+
+typedef __int8            int8_t;
+typedef __int16           int16_t;
+typedef __int32           int32_t;
+typedef __int64           int64_t;
+typedef unsigned __int8   uint8_t;
+typedef unsigned __int16  uint16_t;
+typedef unsigned __int32  uint32_t;
+typedef unsigned __int64  uint64_t;
+
+
+/*---------------------------------
+ * Paths
+ *-------------------------------*/
+
+// Handle default ConfigValues
+namespace tracker { namespace pathConfig
+{
+    // DEFAULT RELATIVE PATHS (might not be used at all)
+    const char defaultRuntimePath[] = "@DEFAULT_RUNTIME_PATH@";
+    const char defaultLibraryPath[] = "@DEFAULT_LIBRARY_PATH@";
+    const char defaultArchivePath[] = "@DEFAULT_ARCHIVE_PATH@";
+    const char defaultDocPath[]     = "@DEFAULT_DOC_PATH@";
+    const char defaultDataPath[]    = "@DEFAULT_DATA_PATH@";
+    const char defaultConfigPath[]  = "@DEFAULT_CONFIG_PATH@";
+    const char defaultLogPath[]     = "@DEFAULT_LOG_PATH@";
+
+    // DEVELOPMENT RUN PATHS
+    const char dataDevDirectory[]           = "@DATA_DIRECTORY@";
+#ifdef CMAKE_CONFIGURATION_TYPES
+    const char configDevDirectory[]         = "@CMAKE_CONFIG_OUTPUT_DIRECTORY@/" CMAKE_INTDIR;
+    const char logDevDirectory[]            = "@CMAKE_LOG_OUTPUT_DIRECTORY@/"    CMAKE_INTDIR;
+#else
+    const char configDevDirectory[]         = "@CMAKE_CONFIG_OUTPUT_DIRECTORY@";
+    const char logDevDirectory[]            = "@CMAKE_LOG_OUTPUT_DIRECTORY@";
+#endif
+
+    const char dependencyLibraryDirectory[] = "@DEP_LIBRARY_DIR@";
+} }
+
+
+#endif /* _TrackerConfig_H__ */

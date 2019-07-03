@@ -1,0 +1,59 @@
+ wxCTB component info
+ --------------------
+ 
+ Website: http://wxcode.sourceforge.net/components/wxctb
+ Version: 0.13
+
+ or for additional support and tools:
+ http://www.iftools.com/extras.en.html
+
+
+ ChangeLog
+ ---------
+ 0.13
+     - remove the expect and match mechanism. They didn't work very
+	  well, and a future implementation should be done as a
+       independent library. If someone missed this functions, please
+       let me know.
+
+ 0.12
+     - more documentation for doxygen
+	- replace the ugly GetSettingsAsString methods by a more intuitive
+	  one.
+     - wxGPIB::Read now checks the MAV bit before reading. This resolves
+	  some stderr stuff on linux.
+
+ 0.11
+     - the gpib sources are no longer depending on the OS. They are
+	  identical for linux and windows.  
+	- add the current version to the ctb include path, so you can
+	  handle a parallel installation of different versions.
+	  For instance: The header path wx/ctb is replaced by wx/ctb-0.11
+
+ 0.10
+     - replace the former gpib async io access with the standard
+	  NI-488 functions (ibrd,ibwrt). To avoid blocking, the internal
+	  gpib timeout was set to the lowest value, whereas the wxIOBase
+	  methods handles the timeout in a global and transparent manner.
+	- add a FindListener method in the wxGPIB class to look for all
+	  connected gpib devices (listeners).
+     - The Read and Readv method of the python wxIOBase class returns
+	  additional zero bytes, fixed. 
+
+ 0.9
+	- added python support for both, serial and gpib 
+
+ 0.8
+     - added bakefile support
+	 
+ 0.7 
+     - added GPIB (Nation Instruments GPIB cards) support
+	 
+
+ Authors' info
+ -------------
+
+ Joachim Buermann          jbuermann@iftools.com
+
+ Thanks to the following people for their hints and patches:
+ - 
